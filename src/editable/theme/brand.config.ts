@@ -13,7 +13,9 @@ export const slot4BrandConfig = {
   productKind,
   ogImage: siteIdentity.ogImage,
   accents: {
-    primary: '#d32323',
+    // Editorial monochrome — the reference reads as ink + paper, with a soft
+    // pink band used sparingly. There is no bold brand red anywhere.
+    primary: '#111111',
     surface: '#ffffff',
   },
 } as const
