@@ -253,21 +253,26 @@ function BookmarkDetail({ post, related }: { post: SitePost; related: SitePost[]
           </article>
 
           <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-            <EditableReveal index={0}>
-              <div className="rounded-[6px] border border-[var(--tk-line)] bg-[var(--tk-surface)] p-7">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--tk-accent-soft)] text-[var(--tk-text)]">
-                  <Bookmark className="h-6 w-6" />
+            {/* Sticky visit CTA. The title lives in the hero only — this card
+                carries the destination and the button, never a second h1. */}
+            {website || domain ? (
+              <EditableReveal index={0}>
+                <div className="rounded-[6px] border border-[var(--tk-line)] bg-[var(--tk-surface)] p-7">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--tk-accent-soft)] text-[var(--tk-text)]">
+                    <Bookmark className="h-6 w-6" />
+                  </div>
+                  <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[var(--tk-muted)]">The resource</p>
+                  {domain ? (
+                    <p className="editable-display mt-3 break-words text-2xl font-medium leading-tight tracking-[-0.02em]">{domain}</p>
+                  ) : null}
+                  {website ? (
+                    <Link href={website} target="_blank" rel="nofollow noopener noreferrer" className="editable-pill mt-6 w-full justify-center bg-[var(--tk-text)] text-[var(--tk-on-accent)]">
+                      {pagesContent.detailPages.sbm.visitButton} <ExternalLink className="h-4 w-4" />
+                    </Link>
+                  ) : null}
                 </div>
-                <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[var(--tk-muted)]">The resource</p>
-                <p className="editable-display mt-3 line-clamp-3 text-2xl font-medium leading-tight tracking-[-0.02em]">{post.title}</p>
-                {domain ? <p className="mt-3 text-sm text-[var(--tk-muted)]">{domain}</p> : null}
-                {website ? (
-                  <Link href={website} target="_blank" rel="nofollow noopener noreferrer" className="editable-pill mt-6 w-full justify-center bg-[var(--tk-text)] text-[var(--tk-on-accent)]">
-                    {pagesContent.detailPages.sbm.visitButton} <ExternalLink className="h-4 w-4" />
-                  </Link>
-                ) : null}
-              </div>
-            </EditableReveal>
+              </EditableReveal>
+            ) : null}
 
             <EditableReveal index={1}>
               <div className="rounded-[6px] border border-[var(--tk-line)] bg-[var(--tk-surface)] p-7">
@@ -467,11 +472,7 @@ function ProfileDetail({ post, related }: { post: SitePost; related: SitePost[] 
                   {website ? (
                     <IdentityRow
                       label="Website"
-                      value={
-                        <Link href={website} target="_blank" rel="nofollow noopener noreferrer" className="underline underline-offset-4 hover:no-underline">
-                          {cleanDomain(website)}
-                        </Link>
-                      }
+                      value={<span>{cleanDomain(website)}</span>}
                       icon={<Globe2 className="h-4 w-4" />}
                     />
                   ) : null}
